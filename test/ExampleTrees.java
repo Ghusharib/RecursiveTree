@@ -1,18 +1,18 @@
 public class ExampleTrees {
 
   public static Tree buildExampleTreeOne() {
-    // TODO: implement
-    return new Tree();
+    return new Tree(4, new Tree (2), new Tree (5));
   }
 
   public static Tree buildExampleTreeTwo() {
-    // TODO: implement
-    return new Tree();
+    return new Tree(4, new Tree (5), new Tree (2));
   }
 
   public static Tree buildExampleTreeThree() {
-    // TODO: implement
-    return new Tree();
+    return new Tree(200,
+                new Tree (50, new Tree (20), null),
+                new Tree (400, new Tree (300), new Tree (800)));
+    //return new Tree();
   }
 
   public static Tree buildExampleTreeFour() {

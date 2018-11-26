@@ -27,8 +27,16 @@ public class Tree {
   }
 
   public String toString() {
-    // TODO: implement
-    return "";
+    String answer;
+    answer = "(" + Integer.toString(getValue());
+    if(left != null){
+      answer += left.toString();
+    }
+    if(right != null){
+      answer += right.toString();
+    }
+    answer += ")";
+    return answer;
   }
 
   public void addOne() {
