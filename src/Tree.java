@@ -29,91 +29,210 @@ public class Tree {
   public String toString() {
     String answer;
     answer = "(" + Integer.toString(getValue());
-    if(left != null){
-      answer += left.toString();
-    }
-    if(right != null){
-      answer += right.toString();
+    if(left != null || right != null){
+      if(left == null){
+        answer += "()";
+      } else {
+        answer += left.toString();
+      }
+      if(right == null){
+        answer += "()";
+      } else {
+        answer += right.toString();
+      }
     }
     answer += ")";
     return answer;
   }
 
   public void addOne() {
-    // TODO: implement
+    value++;
+    if (left != null){
+      left.addOne();
+    }
+    if(right != null){
+      right.addOne();
+    }
   }
 
   public void mirror() {
-    // TODO: implement
+    Tree temp;
+    temp = right;
+    right = left;
+    left = temp;
+    if (right != null)
+      right.mirror();
+    if (left != null)
+      left.mirror();
   }
 
   public boolean find(int n) {
-    // TODO: implement
-    return false;
+    boolean state = false;
+    if (value == n)
+      return true;
+    if (left != null && state != true)
+      state = left.find(n);
+    if (right != null && state != true)
+      state = right.find(n);
+
+    return state;
   }
 
   public boolean isBST() {
-    // TODO: implement
-    return false;
+    if(left != null){
+      if(left.getValue() > value){
+        return false;
+      } else {
+        left.isBST();
+      }
+    }
+    if(right != null){
+      if(right.getValue() < value){
+        return false;
+      } else {
+        right.isBST();
+      }
+    }
+    return true;
   }
 
   public boolean isMirrorBST() {
-    // TODO: implement
-    return false;
+    mirror();
+    return isBST();
   }
 
   public boolean binarySearch(int n) {
-    // TODO: implement
+    if (value == n)
+      return true;
+    else if(left != null && n < value)
+      return left.binarySearch(n);
+    else if(right != null && n > value)
+      return right.binarySearch(n);
     return false;
   }
 
   public Tree clone() {
-    // TODO: implement
-    return null;
+    Tree clone = new Tree(value, left, right);
+    return clone;
   }
 
   public String display() {
-    // TODO: implement
-    return "";
+    String answer = "digraph G {\n";
+    answer += representation();
+    answer += "}";
+    return answer;
+  }
+
+  private String representation(){
+    String answer = "";
+    if (left == null)
+    {
+      answer += (value + " -> \"L" + value + "\" [label=l]; \"L" + value + "\" [shape=point];\n");
+    } else {
+      answer += (value + " -> " + left.getValue() + " [label=l];\n");
+      answer += left.representation();
+    }
+    if (right == null)
+    {
+      answer += (value + " -> \"R" + value + "\" [label=r]; \"R" + value + "\" [shape=point];\n");
+    } else {
+      answer += (value + " -> " + right.getValue() + " [label=r];\n");
+      answer += right.representation();
+    }
+
+    return answer;
   }
 
   public boolean insert(int n) {
-    // TODO: implement
-    return false;
+    if (value == n){
+      return false;
+    } else {
+      if(n < value){
+        if (left == null){
+          left = new Tree (n, null, null);
+        } else {
+          return left.insert(n);
+        }
+      }
+      if(n > value){
+        if (right == null){
+          right = new Tree(n, null, null);
+        } else {
+          return right.insert(n);
+        }
+      }
+    }
+    return true;
   }
 
   public boolean delete(int n) {
-    // TODO: implement
+    if (n == value && (hasLeftRight() || hasOnlyLeft())) {
+      value = left.getValue();
+      right = left.right;
+      left = left.left;
+      return true;
+    } else if (n == value && hasOnlyRight()) {
+      value = right.getValue();
+      left = right.left;
+      right = right.right;
+      return true;
+    }
+    if (n < value){
+      if (left != null){
+        return left.delete(n);
+      } else {
+        return false;
+      }
+    }
+    if (n > value){
+      if (right != null){
+        return right.delete(n);
+      } else {
+        return false;
+      }
+    }
     return false;
   }
 
   private boolean isLeaf() {
-    // TODO: implement
-    return false;
+    if (left == null && right == null)
+      return true;
+    else
+      return false;
   }
 
   private boolean hasOnlyLeft() {
-    // TODO: implement
-    return false;
+    if (left != null && right == null)
+      return true;
+    else
+      return false;
   }
 
   private boolean hasOnlyRight() {
-    // TODO: implement
-    return false;
+    if (left == null && right != null)
+      return true;
+    else
+      return false;
   }
 
   private boolean hasLeftRight() {
-    // TODO: implement
-    return false;
+    if (left != null && right != null)
+      return true;
+    else
+      return false;
   }
 
   private int getMax() {
-    // TODO: implement
-    return -1;
+    if(hasLeftRight()){
+      return right.getMax();
+    }
+    return value;
   }
 
   private int getMin() {
-    // TODO: implement
-    return -1;
+    if(hasLeftRight()){
+      return left.getMax();
+    }
+    return value;
   }
 }
