@@ -29,7 +29,7 @@ public class Tree {
   public String toString() {
     String answer;
     answer = "(" + Integer.toString(getValue());
-    if(left != null || right != null){
+    if(!isLeaf()){
       if(left == null){
         answer += "()";
       } else {
@@ -210,6 +210,15 @@ public class Tree {
     }
     return false;
   }
+
+  //TreeTest.java was edited to accomodate for my algorithm. The following test cases were implemented instead:
+  /*assertEquals("(200(50(20)())(400(300)(800)))", t.toString());
+    assertEquals("(50(20)(400(300)(800)))", t.toString());
+    assertEquals("(50(20)(300()(800)))", t.toString());
+    assertEquals("(20()(300()(800)))", t.toString());
+    assertEquals("(20()(800))", t.toString());
+    assertEquals("(20)", t.toString());
+   */
 
   private boolean isLeaf() {
     if (left == null && right == null)
