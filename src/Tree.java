@@ -166,19 +166,32 @@ public class Tree {
   }
 
   public boolean delete(int n) {
-    if (n == value && (hasLeftRight() || hasOnlyLeft())) {
-      value = left.getValue();
-      right = left.right;
-      left = left.left;
-      return true;
-    } else if (n == value && hasOnlyRight()) {
-      value = right.getValue();
-      left = right.left;
-      right = right.right;
-      return true;
+    if (n == value){
+      if (hasOnlyLeft()) {
+        value = left.getValue();
+        right = left.right;
+        left = left.left;
+        return true;
+      } else if (hasOnlyRight()) {
+        value = right.getValue();
+        left = right.left;
+        right = right.right;
+        return true;
+      } else if (hasLeftRight()) {
+        int temp = getMin();
+        //getMin() returns the next element in a inorder search and so placing it as the new root is acceptable
+        //as we know the rest of the structure will still hold so long as we remove this from it's original place
+        delete(getMin());
+        value = temp;
+        return true;
+      }
     }
     if (n < value){
       if (left != null){
+        if(left.getValue() == n && left.isLeaf()){
+          left = null;
+          return true;
+        }
         return left.delete(n);
       } else {
         return false;
@@ -186,6 +199,10 @@ public class Tree {
     }
     if (n > value){
       if (right != null){
+        if(right.getValue() == n && right.isLeaf()){
+          right = null;
+          return true;
+        }
         return right.delete(n);
       } else {
         return false;

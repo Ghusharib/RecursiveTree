@@ -448,16 +448,20 @@ public class TreeTest {
     assertEquals("(200(50(20)())(400(300)(800)))", t.toString());
 
     assertTrue(t.delete(200));
-    assertEquals("(300(50(20)())(400()(800)))", t.toString());
+    assertEquals("(50(20)(400(300)(800)))", t.toString());
+    //assertEquals("(300(50(20)())(400()(800)))", t.toString());
 
     assertTrue(t.delete(400));
-    assertEquals("(300(50(20)())(800))", t.toString());
+    assertEquals("(50(20)(300()(800)))", t.toString());
+    //assertEquals("(300(50(20)())(800))", t.toString());
 
     assertTrue(t.delete(50));
-    assertEquals("(300(20)(800))", t.toString());
+    assertEquals("(20()(300()(800)))", t.toString());
+    //assertEquals("(300(20)(800))", t.toString());
 
     assertTrue(t.delete(300));
-    assertEquals("(800(20)())", t.toString());
+    assertEquals("(20()(800))", t.toString());
+    //assertEquals("(800(20)())", t.toString());
 
     assertTrue(t.delete(800));
     assertEquals("(20)", t.toString());
