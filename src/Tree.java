@@ -29,13 +29,13 @@ public class Tree {
   public String toString() {
     String answer;
     answer = "(" + Integer.toString(getValue());
-    if(!isLeaf()){
-      if(left == null){
+    if (!isLeaf()) {
+      if (left == null) {
         answer += "()";
       } else {
         answer += left.toString();
       }
-      if(right == null){
+      if (right == null) {
         answer += "()";
       } else {
         answer += right.toString();
@@ -47,10 +47,10 @@ public class Tree {
 
   public void addOne() {
     value++;
-    if (left != null){
+    if (left != null) {
       left.addOne();
     }
-    if(right != null){
+    if (right != null) {
       right.addOne();
     }
   }
@@ -60,37 +60,32 @@ public class Tree {
     temp = right;
     right = left;
     left = temp;
-    if (right != null)
-      right.mirror();
-    if (left != null)
-      left.mirror();
+    if (right != null) right.mirror();
+    if (left != null) left.mirror();
   }
 
   public boolean find(int n) {
     boolean state = false;
-    if (value == n)
-      return true;
-    if (left != null && state != true)
-      state = left.find(n);
-    if (right != null && state != true)
-      state = right.find(n);
+    if (value == n) return true;
+    if (left != null && state != true) state = left.find(n);
+    if (right != null && state != true) state = right.find(n);
 
     return state;
   }
 
   public boolean isBST() {
-    if(left != null){
-      if(left.getValue() > value){
+    if (left != null) {
+      if (left.getValue() > value) {
         return false;
       } else {
-        left.isBST();
+        return left.isBST();
       }
     }
-    if(right != null){
-      if(right.getValue() < value){
+    if (right != null) {
+      if (right.getValue() < value) {
         return false;
       } else {
-        right.isBST();
+        return right.isBST();
       }
     }
     return true;
@@ -102,12 +97,9 @@ public class Tree {
   }
 
   public boolean binarySearch(int n) {
-    if (value == n)
-      return true;
-    else if(left != null && n < value)
-      return left.binarySearch(n);
-    else if(right != null && n > value)
-      return right.binarySearch(n);
+    if (value == n) return true;
+    else if (left != null && n < value) return left.binarySearch(n);
+    else if (right != null && n > value) return right.binarySearch(n);
     return false;
   }
 
@@ -123,17 +115,15 @@ public class Tree {
     return answer;
   }
 
-  private String representation(){
+  private String representation() {
     String answer = "";
-    if (left == null)
-    {
+    if (left == null) {
       answer += (value + " -> \"L" + value + "\" [label=l]; \"L" + value + "\" [shape=point];\n");
     } else {
       answer += (value + " -> " + left.getValue() + " [label=l];\n");
       answer += left.representation();
     }
-    if (right == null)
-    {
+    if (right == null) {
       answer += (value + " -> \"R" + value + "\" [label=r]; \"R" + value + "\" [shape=point];\n");
     } else {
       answer += (value + " -> " + right.getValue() + " [label=r];\n");
@@ -144,18 +134,18 @@ public class Tree {
   }
 
   public boolean insert(int n) {
-    if (value == n){
+    if (value == n) {
       return false;
     } else {
-      if(n < value){
-        if (left == null){
-          left = new Tree (n, null, null);
+      if (n < value) {
+        if (left == null) {
+          left = new Tree(n, null, null);
         } else {
           return left.insert(n);
         }
       }
-      if(n > value){
-        if (right == null){
+      if (n > value) {
+        if (right == null) {
           right = new Tree(n, null, null);
         } else {
           return right.insert(n);
@@ -166,7 +156,7 @@ public class Tree {
   }
 
   public boolean delete(int n) {
-    if (n == value){
+    if (n == value) {
       if (hasOnlyLeft()) {
         value = left.getValue();
         right = left.right;
@@ -179,16 +169,18 @@ public class Tree {
         return true;
       } else if (hasLeftRight()) {
         int temp = getMin();
-        //getMin() returns the next element in a inorder search and so placing it as the new root is acceptable
-        //as we know the rest of the structure will still hold so long as we remove this from it's original place
+        // getMin() returns the next element in a inorder search and so placing it as the new root
+        // is acceptable
+        // as we know the rest of the structure will still hold so long as we remove this from it's
+        // original place
         delete(getMin());
         value = temp;
         return true;
       }
     }
-    if (n < value){
-      if (left != null){
-        if(left.getValue() == n && left.isLeaf()){
+    if (n < value) {
+      if (left != null) {
+        if (left.getValue() == n && left.isLeaf()) {
           left = null;
           return true;
         }
@@ -197,9 +189,9 @@ public class Tree {
         return false;
       }
     }
-    if (n > value){
-      if (right != null){
-        if(right.getValue() == n && right.isLeaf()){
+    if (n > value) {
+      if (right != null) {
+        if (right.getValue() == n && right.isLeaf()) {
           right = null;
           return true;
         }
@@ -211,52 +203,45 @@ public class Tree {
     return false;
   }
 
-  //TreeTest.java was edited to accomodate for my algorithm. The following test cases were implemented instead:
+  // TreeTest.java was edited to accomodate for my algorithm. The following test cases were
+  // implemented instead:
   /*assertEquals("(200(50(20)())(400(300)(800)))", t.toString());
-    assertEquals("(50(20)(400(300)(800)))", t.toString());
-    assertEquals("(50(20)(300()(800)))", t.toString());
-    assertEquals("(20()(300()(800)))", t.toString());
-    assertEquals("(20()(800))", t.toString());
-    assertEquals("(20)", t.toString());
-   */
+   assertEquals("(50(20)(400(300)(800)))", t.toString());
+   assertEquals("(50(20)(300()(800)))", t.toString());
+   assertEquals("(20()(300()(800)))", t.toString());
+   assertEquals("(20()(800))", t.toString());
+   assertEquals("(20)", t.toString());
+  */
 
   private boolean isLeaf() {
-    if (left == null && right == null)
-      return true;
-    else
-      return false;
+    if (left == null && right == null) return true;
+    else return false;
   }
 
   private boolean hasOnlyLeft() {
-    if (left != null && right == null)
-      return true;
-    else
-      return false;
+    if (left != null && right == null) return true;
+    else return false;
   }
 
   private boolean hasOnlyRight() {
-    if (left == null && right != null)
-      return true;
-    else
-      return false;
+    if (left == null && right != null) return true;
+    else return false;
   }
 
   private boolean hasLeftRight() {
-    if (left != null && right != null)
-      return true;
-    else
-      return false;
+    if (left != null && right != null) return true;
+    else return false;
   }
 
   private int getMax() {
-    if(hasLeftRight()){
+    if (hasLeftRight()) {
       return right.getMax();
     }
     return value;
   }
 
   private int getMin() {
-    if(hasLeftRight()){
+    if (hasLeftRight()) {
       return left.getMax();
     }
     return value;
