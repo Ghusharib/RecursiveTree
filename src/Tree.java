@@ -78,14 +78,14 @@ public class Tree {
       if (left.getValue() > value) {
         return false;
       } else {
-        return left.isBST();
+        return (left.isBST() && !left.find(value));
       }
     }
     if (right != null) {
       if (right.getValue() < value) {
         return false;
       } else {
-        return right.isBST();
+        return (right.isBST() && !right.find(value));
       }
     }
     return true;
@@ -234,14 +234,14 @@ public class Tree {
   }
 
   private int getMax() {
-    if (hasLeftRight()) {
+    if (hasLeftRight() || hasOnlyRight()) {
       return right.getMax();
     }
     return value;
   }
 
   private int getMin() {
-    if (hasLeftRight()) {
+    if (hasLeftRight() || hasOnlyLeft()) {
       return left.getMax();
     }
     return value;
