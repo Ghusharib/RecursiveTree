@@ -78,14 +78,14 @@ public class Tree {
       if (left.getValue() > value) {
         return false;
       } else {
-        return (left.isBST() && !left.find(value));
+        return (left.isBST());
       }
     }
     if (right != null) {
       if (right.getValue() < value) {
         return false;
       } else {
-        return (right.isBST() && !right.find(value));
+        return (right.isBST());
       }
     }
     return true;
